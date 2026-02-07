@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Shekinah Mission Cloud';
+const description = 'Миссия Шехина: духовное назидание через современные технологии - React, Astro, Cloudflare AI';
+const permalink = Astro.site.href;
+---
+
+<BaseLayout title={title} description={description} permalink={permalink}>
+  <div class="container mx-auto px-4 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12">
+    <div class="flex-1 text-center lg:text-left space-y-8">
+      <h1 class="text-4xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+        <span class="gradient-text gradient-blue block sm:inline">🌍 Shekinah</span>
+        <span class="gradient-text gradient-orange block sm:inline">Mission</span>
+        <span class="gradient-text gradient-purple block sm:inline">Cloud</span>
+      </h1>
+      <p class="text-xl lg:text-2xl text-gray-900 dark:text-white font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
+        Где Божественное присутствие встречается с технологиями будущего. 
+        Мы созидаем цифровую архитектуру на фундаменте вечных истин.
+      </p>
+      
+      <div class="p-6 dynamic-block">
+        <p class="text-lg text-orange-600 dark:text-orange-400 font-bold italic">
+        «Искусственный Интеллект может дать ответы всему миру, 
+        но только в Школе Христа мы учимся правильно задавать вопросы».
+        </p>
+        <p class="mt-2 text-blue-700 dark:text-blue-400 font-bold">— Миссия Шехина & Веб-Студия</p>
+      </div>
+
+      <p class="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+        Проекты на грани веры и кода: React, Astro, Cloudflare AI и духовное назидание.
+      </p>
+    </div>
+    
+    <div class="flex-1 w-full max-w-lg lg:max-w-xl relative">
+      <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full blur-3xl -z-10"></div>
+      <picture>
+        <source srcset="/assets/home-illustration.webp" media="(min-width: 600px)">
+        <img class="w-full h-auto drop-shadow-xl transform hover:scale-105 transition-transform duration-500" alt="Illustration of person reading a book" src="/assets/home-illustration-small.webp" width="550" height="466">
+      </picture>
+      <p class="text-xs text-gray-400 mt-4 text-center italic">
+        Illustration by
+        <a href="https://icons8.com/illustrations/author/5c07e68d82bcbc0092519bb6" target="_blank" rel="noopener" class="hover:text-blue-500 transition-colors">Icons 8</a>
+        from
+        <a href="https://icons8.com/illustrations" target="_blank" rel="noopener" class="hover:text-blue-500 transition-colors">Ouch!</a>
+      </p>
+      <div class="mt-8 text-center">
+        <p class="text-lg font-serif italic text-blue-900 dark:text-blue-100">
+        «Слово Твое — светильник ноге моей и свет стезе моей»
+        </p>
+        <p class="text-sm font-bold text-gray-500 mt-1">— Псалтирь 118:105</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .gradient-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-size: 200% auto;
+    animation: shine 4s linear infinite;
+  }
+  .gradient-blue {
+    background-image: linear-gradient(to right, #2563eb 0%, #22d3ee 50%, #2563eb 100%);
+  }
+  .gradient-orange {
+    background-image: linear-gradient(to right, #ea580c 0%, #fbbf24 50%, #ea580c 100%);
+  }
+  .gradient-purple {
+    background-image: linear-gradient(to right, #9333ea 0%, #e879f9 50%, #9333ea 100%);
+  }
+  @keyframes shine {
+    to { background-position: 200% center; }
+  }
+
+  .dynamic-block {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+</style>

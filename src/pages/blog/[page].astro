@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts');
+  allPosts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+  
+  const postsPerPage = 10;
+  const totalPages = Math.ceil(allPosts.length / postsPerPage);
+  
+  const paths = [];
+  for (let i = 2; i <= totalPages; i++) {
+    paths.push({
+      params: { page: i.toString() },
+      props: { 
+        currentPage: i,
+        totalPages: totalPages,
+        allPosts: allPosts,
+        postsPerPage: postsPerPage
+      }
+    });
+  }
+  
+  return paths;
+}
+
+const { currentPage, totalPages, allPosts, postsPerPage } = Astro.props;
+
+const startIndex = (currentPage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+const currentPosts = allPosts.slice(startIndex, endIndex);
+
+const title = 'Blog';
+const description = 'Latest articles.';
+const permalink = `${Astro.site.href}blog/${currentPage}`;
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="blog">
+  <div class="blog-container">
+    <div class="blog-layout">
+      <BlogSidebar />
+      
+      <main class="blog-main">
+        <div style="margin-bottom: 2rem;">
+          <h1 style="font-size: 2.25rem; font-weight: 800; line-height: 2.5rem; margin-bottom: 0.5rem; color: var(--text-main);">
+            📝 Блог
+          </h1>
+          <p style="font-size: 1.125rem; color: var(--text-secondary);">
+            Последние статьи и размышления (страница {currentPage} из {totalPages})
+          </p>
+        </div>
+        
+        {currentPosts.map((post) => (
+          <article class="blog-post">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <div class="blog-post-meta">
+                {new Date(post.data.publishDate).toLocaleDateString('ru-RU', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </div>
+              
+              <div>
+                <h2 class="blog-post-title">
+                  <a href={`/blog/${post.data.slug}`}>
+                    {post.data.title}
+                  </a>
+                </h2>
+              </div>
+              
+              <div class="blog-post-description">
+                {post.data.description}
+              </div>
+              
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="blog-tags">
+                  {post.data.tags.map((tag) => (
+                    <a href={`/blog/tags/${tag}`} class="blog-tag">
+                      #{tag}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+        
+        <!-- Пагинация -->
+        <div class="pagination" style="margin-top: 3rem; display: flex; justify-content: center; align-items: center; gap: 1rem;">
+          {currentPage > 1 && (
+            <a href={currentPage > 2 ? `/blog/${currentPage - 1}` : '/blog/'} class="pagination-btn" style="padding: 0.5rem 1rem; background: var(--primary-color); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 500;">
+              ← Назад
+            </a>
+          )}
+          
+          <span style="color: var(--text-secondary); font-weight: 500;">
+            {currentPage} / {totalPages}
+          </span>
+          
+          {currentPage < totalPages && (
+            <a href={`/blog/${currentPage + 1}`} class="pagination-btn" style="padding: 0.5rem 1rem; background: var(--primary-color); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 500;">
+              Вперед →
+            </a>
+          )}
+        </div>
+      </main>
+    </div>
+  </div>
+</BaseLayout>

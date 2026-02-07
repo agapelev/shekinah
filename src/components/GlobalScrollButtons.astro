@@ -1,0 +1,81 @@
+---
+// Глобальные кнопки скроллинга которые работают на всех страницах
+---
+
+<div id="globalScrollButtons" class="scroll-buttons">
+  <button id="globalScrollUp" class="scroll-btn scroll-up" title="Наверх" onclick="scrollUp()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6 6"/>
+    </svg>
+  </button>
+  <button id="globalScrollDown" class="scroll-btn scroll-down" title="Вниз" onclick="scrollDown()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .scroll-buttons {
+    position: fixed;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 9999;
+  }
+
+  .scroll-btn {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .scroll-btn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    opacity: 1;
+  }
+
+  .scroll-btn:active {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 768px) {
+    .scroll-buttons {
+      right: 0.5rem;
+    }
+    
+    .scroll-btn {
+      width: 1.8rem;
+      height: 1.8rem;
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .scroll-btn {
+      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+      box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
+    }
+    
+    .scroll-btn:hover {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+  }
+</style>

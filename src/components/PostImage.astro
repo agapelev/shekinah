@@ -1,0 +1,76 @@
+---
+// Компонент для отображения изображения поста
+export interface Props {
+  // Путь к файлу изображения (без /assets/blog/)
+  image?: string;
+  // Alt текст для изображения
+  alt?: string;
+  // Заголовок изображения
+  title?: string;
+  // Показывать в ленте (маленький размер) или в посте (большой размер)
+  size?: 'small' | 'large';
+}
+
+const { image, alt = '', title = '', size = 'large' } = Astro.props;
+
+// Отладка - проверяем что передано в компонент
+console.log('PostImage props:', { image, alt, title, size });
+
+// Если изображение не указано - не отображаем ничего
+if (!image) {
+  console.log('PostImage: нет изображения, пропускаем');
+  // Возвращаем пустой фрагмент
+  return Astro.slots.render(Astro.slots.default);
+}
+
+// Полный путь к изображению
+const imagePath = `/assets/blog/${image}`;
+
+// Классы в зависимости от размера
+const imageClasses = size === 'small' 
+  ? 'w-16 h-16 object-cover rounded-lg mr-3 mb-2' 
+  : 'w-48 h-48 object-cover rounded-lg mb-4 mx-auto block';
+---
+
+<figure class={`post-image ${size === 'small' ? 'post-image--small' : 'post-image--large'}`}>
+  <img 
+    src={imagePath} 
+    alt={alt || title || 'Изображение поста'} 
+    class={imageClasses}
+    loading="lazy"
+  />
+  {title && (
+    <figcaption class="text-center text-sm text-gray-600 dark:text-gray-400 mt-2">
+      {title}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .post-image {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Для ленты постов - маленькое изображение слева */
+  .post-image--small {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Для полного поста - центрированное изображение */
+  .post-image--large {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .post-image img {
+    transition: transform 0.3s ease;
+  }
+  
+  .post-image:hover img {
+    transform: scale(1.02);
+  }
+</style>

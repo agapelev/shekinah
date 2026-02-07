@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  /* Переносим твою палитру Brand из конфига Mantine */
+  --color-brand-50: #dbeafe;
+  --color-brand-500: #3b82f6;
+  --color-brand-900: #172554;
+
+  /* Те самые цвета для плиток (tile) */
+  --color-tile-blue: #3b82f6;
+  --color-tile-yellow: #fbbf24;
+  --color-tile-orange: #f97316;
+  --color-tile-purple: #8b5cf6;
+
+  /* Шрифты */
+  --font-sans: "Inter", ui-sans-serif, system-ui;
+  --font-serif: "Georgia", serif;
+
+  /* Скругления (Radius) */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+/* Глобальные переменные для темной темы (вместо getInitialColorScheme) */
+:root {
+  --bg-main: #ffffff;
+  --text-main: #1a1a1a;
+}
+
+.dark {
+  --bg-main: #0f172a;
+  --text-main: #f8fafc;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+}
+
+@theme {
+  /* Твоя палитра Brand из Mantine */
+  --color-brand-primary: #3b82f6;
+  --color-brand-dark: #1e3a8a;
+
+  /* Цвета плиток */
+  --color-tile-blue: #3b82f6;
+  --color-tile-yellow: #fbbf24;
+  --color-tile-orange: #f97316;
+  --color-tile-purple: #8b5cf6;
+}
+
+/* Настраиваем базовые цвета фона и текста */
+@layer base {
+  html {
+    @apply bg-white text-slate-900 transition-colors duration-300;
+  }
+
+  html.dark {
+    @apply bg-slate-950 text-slate-50;
+  }
+}

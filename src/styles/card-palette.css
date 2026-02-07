@@ -1,0 +1,109 @@
+/* 
+  Пастельная цветовая палитра для всех плиток на сайте
+  5 цветов, повторяющихся циклически
+*/
+
+.card-colored {
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-colored:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ============================================
+   СВЕТЛЫЙ РЕЖИМ - Пастельные цвета
+   ============================================ */
+
+/* Синий пастель (1, 6, 11, 16...) */
+.card-colored:nth-child(5n+1) {
+  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+  border: 2px solid #90CAF9;
+  box-shadow: 0 4px 15px rgba(144, 202, 249, 0.3);
+}
+
+/* Жёлтый пастель (2, 7, 12, 17...) */
+.card-colored:nth-child(5n+2) {
+  background: linear-gradient(135deg, #FFFDE7 0%, #FFF9C4 100%);
+  border: 2px solid #FFE082;
+  box-shadow: 0 4px 15px rgba(255, 224, 130, 0.3);
+}
+
+/* Оранжевый пастель (3, 8, 13, 18...) */
+.card-colored:nth-child(5n+3) {
+  background: linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%);
+  border: 2px solid #FFB74D;
+  box-shadow: 0 4px 15px rgba(255, 183, 77, 0.3);
+}
+
+/* Фиолетовый пастель (4, 9, 14, 19...) */
+.card-colored:nth-child(5n+4) {
+  background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+  border: 2px solid #CE93D8;
+  box-shadow: 0 4px 15px rgba(206, 147, 216, 0.3);
+}
+
+/* Розово-красный пастель (5, 10, 15, 20...) */
+.card-colored:nth-child(5n+5) {
+  background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%);
+  border: 2px solid #F48FB1;
+  box-shadow: 0 4px 15px rgba(244, 143, 177, 0.3);
+}
+
+/* ============================================
+   ТЁМНЫЙ РЕЖИМ - Яркие, насыщенные цвета
+   ============================================ */
+
+html.dark .card-colored:nth-child(5n+1),
+body.dark .card-colored:nth-child(5n+1),
+.dark .card-colored:nth-child(5n+1),
+[data-theme="dark"] .card-colored:nth-child(5n+1) {
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  border-color: #60A5FA;
+  box-shadow: 0 4px 15px rgba(96, 165, 250, 0.5);
+  color: #FFFFFF;
+}
+
+html.dark .card-colored:nth-child(5n+2),
+body.dark .card-colored:nth-child(5n+2),
+.dark .card-colored:nth-child(5n+2),
+[data-theme="dark"] .card-colored:nth-child(5n+2) {
+  background: linear-gradient(135deg, #CA8A04 0%, #EAB308 100%);
+  border-color: #FACC15;
+  box-shadow: 0 4px 15px rgba(250, 204, 21, 0.5);
+  color: #1F2937;
+}
+
+html.dark .card-colored:nth-child(5n+3),
+body.dark .card-colored:nth-child(5n+3),
+.dark .card-colored:nth-child(5n+3),
+[data-theme="dark"] .card-colored:nth-child(5n+3) {
+  background: linear-gradient(135deg, #D97706 0%, #F97316 100%);
+  border-color: #FB923C;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.5);
+  color: #FFFFFF;
+}
+
+html.dark .card-colored:nth-child(5n+4),
+body.dark .card-colored:nth-child(5n+4),
+.dark .card-colored:nth-child(5n+4),
+[data-theme="dark"] .card-colored:nth-child(5n+4) {
+  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  border-color: #D8B4FE;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.5);
+  color: #FFFFFF;
+}
+
+html.dark .card-colored:nth-child(5n+5),
+body.dark .card-colored:nth-child(5n+5),
+.dark .card-colored:nth-child(5n+5),
+[data-theme="dark"] .card-colored:nth-child(5n+5) {
+  background: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%);
+  border-color: #F472B6;
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.5);
+  color: #FFFFFF;
+}

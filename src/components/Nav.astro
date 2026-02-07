@@ -1,0 +1,76 @@
+---
+import ThemeToggleButton from './ThemeToggleButton.svelte';
+const { current = '' } = Astro.props;
+---
+
+<style>
+  nav {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    font-family: var(--font-family-sans);
+    font-weight: 700;
+    justify-content: flex-end;
+    text-transform: uppercase;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    padding: 10px 5px;
+    display: block;
+    position: relative;
+    margin-left: 20px;
+    min-width: 70px;
+    text-align: center;
+  }
+
+  a:not(.selected) {
+    opacity: 0.7;
+  }
+
+  a::before {
+    content: '';
+    position: absolute;
+    transition: transform .3s ease;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--text-secondary);
+    transform: scaleX(0);
+  }
+
+  a:hover::before,
+  .selected::before {
+    transform: scaleX(1);
+  }
+
+  .selected::before {
+    background: var(--primary-color);
+  }
+
+  .theme-toggle-container {
+    width: 75px;
+  }
+
+  @media screen and (max-width: 520px) {
+    .theme-toggle-container {
+      margin-right: 1em;
+    }
+  }
+</style>
+
+<nav>
+  <a class={current === "" ? "selected" : ""} href='/'>🏠 Главная</a>
+  <a class={current === "about" ? "selected" : ""} href='/about'>👥 О нас</a>
+  <a class={current === "blog" ? "selected" : ""} href='/blog'>📝 Блог</a>
+  <a class={current === "tags" ? "selected" : ""} href='/blog/tags'>🏷️ Теги</a>
+  <a href="https://mission-shekinah.vercel.app/" target="_blank" rel="noopener">🎓 Академия</a>
+  <a href="https://shekinah-blog.vercel.app/" target="_blank" rel="noopener">🦁 WEb Aristan</a>
+  <a href="https://ai.dessyatykh.workers.dev/" target="_blank" rel="noopener">🤖 AI</a>
+
+  <div class="theme-toggle-container">
+    <ThemeToggleButton client:load />
+  </div>
+</nav>

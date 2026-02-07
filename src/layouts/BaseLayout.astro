@@ -1,0 +1,82 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import GlobalScrollButtons from '../components/GlobalScrollButtons.astro';
+
+// Импортируем стили (убедись, что путь правильный, обычно в Astro 5 это src/styles/global.css)
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  permalink: string;
+  current?: string;
+}
+
+const { title, description, permalink, current } = Astro.props;
+---
+<html lang="ru">
+<head>
+  <BaseHead title={title} description={description} permalink={permalink} />
+  <script is:inline>
+    // Глобальные функции для скроллинга (оставил как было, но сделал безопаснее для Astro)
+    window.scrollUp = function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.scrollDown = function() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    };
+  </script>
+
+  <script is:inline>
+  // Функция для установки темы
+  const setTheme = () => {
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  // Запускаем при загрузке
+  setTheme();
+
+  // Слушаем событие смены страницы Astro (для SPA-переходов)
+  document.addEventListener('astro:after-swap', setTheme);
+</script>
+</head>
+<body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 antialiased">
+  <!--
+    Используем Flexbox для прижатия футера к низу.
+    min-h-screen — это 100vh
+  -->
+  <div class="flex flex-col min-h-screen">
+    <Header current={current} />
+
+    <!--
+      Это твой основной контейнер.
+      flex-grow заставляет его занимать всё свободное место.
+      max-w-[1400px] и mx-auto центрируют контент.
+    -->
+    <main class="flex-grow w-full max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex flex-col">
+      <slot />
+    </main>
+
+    <Footer />
+  </div>
+
+  <GlobalScrollButtons />
+</body>
+</html>
+
+<style>
+  /*
+    Здесь можно оставить специфичные стили,
+    но почти всё уже сделано классами Tailwind выше
+  */
+</style>

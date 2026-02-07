@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogSearch from '../../components/BlogSearch.svelte';
+
+const title = 'Блог';
+const description = 'Последние статьи, размышления и уроки из Миссии Шехина';
+const permalink = `${Astro.site.href}blog`;
+
+const allPosts = await getCollection('posts');
+allPosts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="blog">
+  <div class="py-10 px-4">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Заголовок страницы (Page Header) -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 italic tracking-tight text-slate-900 dark:text-white">
+          📝 Блог
+        </h1>
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          Последние статьи, размышления и уроки
+        </p>
+      </div>
+
+      <!-- Компонент поиска и сетка постов -->
+      <BlogSearch client:load posts={allPosts} />
+
+    </div>
+  </div>
+</BaseLayout>

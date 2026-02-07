@@ -1,0 +1,39 @@
+---
+const { currentTag = '' } = Astro.props;
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
+const tagCounts = allTags.reduce((acc, tag) => {
+  acc[tag] = posts.filter(post => post.data.tags?.includes(tag)).length;
+  return acc;
+}, {});
+const sortedTags = Object.entries(tagCounts)
+  .sort(([,a], [,b]) => b - a)
+  .slice(0, 15);
+---
+
+<aside class="blog-sidebar">
+  <div class="sidebar">
+    <h3 class="sidebar-title">
+      🏷️ Популярные теги
+    </h3>
+    <ul class="sidebar-list">
+      {sortedTags.map(([tag, count]) => (
+        <li class="sidebar-item">
+          <a 
+            href={`/blog/tags/${tag}`}
+            class={`sidebar-link ${currentTag === tag ? 'active' : ''}`}
+          >
+            {tag} ({count})
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="sidebar-footer">
+      <a href="/blog/tags">
+        Все теги →
+      </a>
+    </div>
+  </div>
+</aside>

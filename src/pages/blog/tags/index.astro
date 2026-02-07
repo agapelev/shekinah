@@ -1,0 +1,265 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))] as string[];
+
+const tagCounts = allTags.reduce((acc: Record<string, number>, tag) => {
+  acc[tag] = posts.filter(post => post.data.tags?.includes(tag)).length;
+  return acc;
+}, {});
+
+const sortedTags = Object.entries(tagCounts)
+  .sort(([,a], [,b]) => b - a)
+  .map(([tag, count]) => ({ tag, count }));
+---
+
+<BaseLayout title="Все теги блога" description="Полный список тегов и категорий блога">
+  <div class="blog-container">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">
+        🏷️ Все теги
+      </h1>
+      <p style="font-size: 1.125rem; color: var(--text-secondary);">
+        Всего тегов: {sortedTags.length} | Всего постов: {posts.length}
+      </p>
+    </div>
+
+    <div class="tags-grid">
+      {sortedTags.map(({ tag, count }) => (
+        <a href={`/blog/tags/${tag}`} class="tag-card">
+          <div class="tag-header">
+            <h3 class="tag-name">{tag}</h3>
+            <span class="tag-count">{count}</span>
+          </div>
+          <p class="tag-description">Постов с этим тегом: {count}</p>
+          <div class="tag-link">
+            Смотреть все
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {sortedTags.length === 0 && (
+      <div style="text-align: center; padding: 3rem 0;">
+        <div style="color: var(--text-secondary); font-size: 1.125rem;">
+          Теги пока не добавлены
+        </div>
+        <a href="/blog" style="margin-top: 1rem; display: inline-block; color: #2563eb;">
+          ← Вернуться к блогу
+        </a>
+      </div>
+    )}
+
+    <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--text-secondary);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 0.875rem; color: var(--text-secondary);">
+          Показано {sortedTags.length} тегов
+        </div>
+        <a href="/blog" style="color: #2563eb; font-weight: 500;">
+          ← Вернуться к блогу
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .tags-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .tags-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tags-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .tag-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-main);
+    border: 2px solid var(--border-color);
+  }
+
+  /* Синий (светофор) */
+  .tag-card:nth-child(5n+1) {
+    border-color: #3b82f6;
+    border-width: 2px;
+  }
+
+  /* Жёлтый (светофор) */
+  .tag-card:nth-child(5n+2) {
+    border-color: #fbbf24;
+    border-width: 2px;
+  }
+
+  /* Оранжевый (светофор) */
+  .tag-card:nth-child(5n+3) {
+    border-color: #f97316;
+    border-width: 2px;
+  }
+
+  /* Фиолетовый (светофор) */
+  .tag-card:nth-child(5n+4) {
+    border-color: #8b5cf6;
+    border-width: 2px;
+  }
+
+  /* Розово-красный (светофор) */
+  .tag-card:nth-child(5n+5) {
+    border-color: #ec4899;
+    border-width: 2px;
+  }
+
+  /* Тёмный режим - просто наследуем стили */
+  html.dark .tag-card:nth-child(5n+1),
+  body.dark .tag-card:nth-child(5n+1),
+  .dark .tag-card:nth-child(5n+1),
+  [data-theme="dark"] .tag-card:nth-child(5n+1) {
+    border-color: #3b82f6;
+  }
+
+  html.dark .tag-card:nth-child(5n+2),
+  body.dark .tag-card:nth-child(5n+2),
+  .dark .tag-card:nth-child(5n+2),
+  [data-theme="dark"] .tag-card:nth-child(5n+2) {
+    border-color: #fbbf24;
+  }
+
+  html.dark .tag-card:nth-child(5n+3),
+  body.dark .tag-card:nth-child(5n+3),
+  .dark .tag-card:nth-child(5n+3),
+  [data-theme="dark"] .tag-card:nth-child(5n+3) {
+    border-color: #f97316;
+  }
+
+  html.dark .tag-card:nth-child(5n+4),
+  body.dark .tag-card:nth-child(5n+4),
+  .dark .tag-card:nth-child(5n+4),
+  [data-theme="dark"] .tag-card:nth-child(5n+4) {
+    border-color: #8b5cf6;
+  }
+
+  html.dark .tag-card:nth-child(5n+5),
+  body.dark .tag-card:nth-child(5n+5),
+  .dark .tag-card:nth-child(5n+5),
+  [data-theme="dark"] .tag-card:nth-child(5n+5) {
+    border-color: #ec4899;
+  }
+
+  .tag-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .tag-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .tag-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: inherit;
+    text-transform: capitalize;
+    margin: 0;
+  }
+
+  html.dark .tag-name,
+  body.dark .tag-name,
+  .dark .tag-name,
+  [data-theme="dark"] .tag-name {
+    color: inherit !important;
+  }
+
+  .tag-count {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  html.dark .tag-count,
+  body.dark .tag-count,
+  .dark .tag-count,
+  [data-theme="dark"] .tag-count {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    color: inherit !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .tag-description {
+    color: inherit;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    opacity: 0.9;
+  }
+
+  html.dark .tag-description,
+  body.dark .tag-description,
+  .dark .tag-description,
+  [data-theme="dark"] .tag-description {
+    color: inherit !important;
+  }
+
+  .tag-link {
+    display: flex;
+    align-items: center;
+    color: inherit;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-top: auto;
+    opacity: 0.95;
+  }
+
+  html.dark .tag-link,
+  body.dark .tag-link,
+  .dark .tag-link,
+  [data-theme="dark"] .tag-link {
+    color: inherit !important;
+  }
+
+  .tag-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.5rem;
+    transition: transform 0.2s;
+    color: inherit;
+  }
+
+  .tag-card:hover .tag-link svg {
+    transform: translateX(4px);
+  }
+</style>

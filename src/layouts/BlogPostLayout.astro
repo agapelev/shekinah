@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostImage from '../../components/PostImage.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  publishDate: string;
+  image?: string;
+  imageAlt?: string;
+  imageTitle?: string;
+}
+
+const { title, description, publishDate, image, imageAlt, imageTitle } = Astro.props;
+const { Content } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} permalink={Astro.url.href}>
+  <article class="post-article">
+    <header class="post-header">
+      <!-- Изображение поста (если есть) -->
+      <PostImage 
+        image={image}
+        alt={imageAlt || title}
+        title={imageTitle}
+        size="large"
+      />
+      
+      <h1 class="post-title">{title}</h1>
+      
+      <div class="post-meta">
+        <time datetime={publishDate}>
+          {new Date(publishDate).toLocaleDateString('ru-RU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+      </div>
+      
+      {description && (
+        <div class="post-description">
+          {description}
+        </div>
+      )}
+    </header>
+    
+    <main class="post-content">
+      <Content />
+    </main>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .post-header {
+    margin-bottom: 2rem;
+  }
+  
+  .post-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+  }
+  
+  .post-meta {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+  
+  .post-description {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .post-content {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    clear: both;
+  }
+  
+  @media (min-width: 768px) {
+    .post-article {
+      max-width: 800px;
+      padding: 2rem;
+    }
+  }
+</style>

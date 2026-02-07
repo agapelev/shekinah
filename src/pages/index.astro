@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Shekinah Mission Cloud';
+const description = 'Миссия Шехина: духовное назидание через современные технологии - React, Astro, Cloudflare AI';
+const permalink = Astro.site.href;
+---
+
+<BaseLayout title={title} description={description} permalink={permalink}>
+  <div style="padding: 2.5rem 1rem;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; margin: 2rem 0; min-height: 400px;">
+        
+        {/* Text Content */}
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;">
+          <d        iv>
+            <h1 style="font-weight: 800; font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1.2;">
+              <span style="color: #2563eb;">🌍 Shekinah</span> <span style="color: #ea580c;">Mission</span> <span style="color: #9333ea;">Cloud</span>
+            </h1>
+          </div>
+          
+          <p style="font-size: 1.125rem; color: var(--text-secondary); line-height: 1.6;">
+            Где Божественное присутствие встречается с технологиями будущего. 
+            Мы созидаем цифровую архитектуру на фундаменте вечных истин.
+          </p>
+
+          <div style="background-color: var(--bg-offset); padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border-color); border-left: 4px solid var(--primary-color);">
+            <p style="font-style: italic; font-weight: 500; line-height: 1.6; color: var(--text-main); margin: 0 0 0.5rem 0;">
+              «Искусственный Интеллект может дать ответы всему миру, 
+              но только в "Школе Христа" мы учимся правильно задавать вопросы».
+            </p>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+              — Миссия Шехина & Веб-Студия
+            </p>
+          </div>
+
+          <p style="font-size: 1rem; color: var(--text-secondary);">
+            Проекты на грани веры и кода: React, Astro, Cloudflare AI и духовное назидание.
+          </p>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a 
+              href="/blog" 
+              style="padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; border-radius: 0.375rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s;"
+              onmouseover="this.style.opacity = '0.8'"
+              onmouseout="this.style.opacity = '1'"
+            >
+              Читать блог →
+            </a>
+            <a 
+              href="/about" 
+              style="padding: 0.75rem 1.5rem; background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); border-radius: 0.375rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: background-color 0.2s;"
+              onmouseover="this.style.backgroundColor = 'var(--bg-offset)'"
+              onmouseout="this.style.backgroundColor = 'transparent'"
+            >
+              Узнать больше
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Image Section */}
+      <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem;">
+        <picture>
+          <source srcset="/assets/home-illustration.webp" media="(min-width: 600px)" />
+          <img 
+            src="/assets/home-illustration-small.webp" 
+            alt="Illustration of person reading a book" 
+            style="max-width: 100%; height: auto; max-height: 500px; border-radius: 8px;"
+          />
+        </picture>
+      </div>
+
+      {/* Attribution */}
+      <div style="margin-top: 1rem; text-align: center;">
+        <p style="font-size: 0.75rem; color: var(--text-secondary);">
+          Illustration by
+          <a href="https://icons8.com/illustrations/author/5c07e68d82bcbc0092519bb6" target="_blank" rel="noopener" style="color: var(--accent-color);">
+            {' '}Icons 8{' '}
+          </a>
+          from
+          <a href="https://icons8.com/illustrations" target="_blank" rel="noopener" style="color: var(--accent-color);">
+            {' '}Ouch!
+          </a>
+        </p>
+      </div>
+
+      {/* Bible Verse */}
+      <div style="margin-top: 2.5rem; padding: 1rem; text-align: center;">
+        <p style="font-size: 1.125rem; font-style: italic; font-weight: 500; line-height: 1.8; max-width: 600px; margin: 0 auto;">
+          «Слово Твое — светильник ноге моей и свет стезе моей»
+          <br />
+          <span style="font-size: 0.9em;">— Псалтирь 118:105</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
